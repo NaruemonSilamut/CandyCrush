@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-
+import { PrismaClient } from '@prisma/client';
 let prisma;
 
 try {
@@ -10,4 +9,4 @@ try {
     process.exit(1); // Exit the process with a failure code
 }
 
-module.exports = prisma;
+export default prisma;

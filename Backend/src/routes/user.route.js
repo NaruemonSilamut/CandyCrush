@@ -1,16 +1,9 @@
-const express = require("express");
-
+import express from "express";
+import { register,login, logout } from "../controller/authController.js";
 const router = express.Router();
-router.post("/users", async (req, res) => {
-    const {  email , name , password } = req.body;
-    const user = await prisma.user.create({
-        data: {
-        email,
-        name,
-        password,
-        },
-    });
-    res.json(user);
-});
 
-module.exports = router;
+router.post("/register", register);
+router.post("/login",login);
+router.get("/logout",logout);
+
+export default router;
