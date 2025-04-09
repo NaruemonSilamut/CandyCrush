@@ -1,12 +1,15 @@
-import { Tabs } from "expo-router";
+import { Tabs, usePathname, Redirect } from "expo-router";
+import TabBar from "../components/TabBar";
 
-export default function RootLayout() {
+
+const TabsLayout = () => {
+ 
   return (
-    <Tabs>
-      <Tabs.Screen name="index" />
-      <Tabs.Screen name="home" />
-      <Tabs.Screen name="login" />
-
-    </Tabs>
+    <Tabs
+      screenOptions={{ headerShown: false }}
+      tabBar={(props) => <TabBar {...props} />}
+    />
   );
-}
+};
+
+export default TabsLayout;
