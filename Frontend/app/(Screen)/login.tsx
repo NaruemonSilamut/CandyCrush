@@ -7,7 +7,7 @@ const Login = () => {
   const router = useRouter();
 
   const handleRegister = () => {
-    router.push("/(Screen)/Register");
+    router.push("/(Screen)/register");
   };
   return (
     <View className="flex-1 justify-center items-center bg-[#E5D8FF] px-6 ">

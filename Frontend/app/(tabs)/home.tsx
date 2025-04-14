@@ -110,29 +110,31 @@ export default function HomeScreen() {
         }}
       />
 
-      {/* Menu */}
-      <View className="flex-row justify-between items-center px-1">
+     {/* Menu */}
+     <View className="flex-row justify-between items-center px-1">
         <Text className="text-gray-800 font-semibold text-lg left-2 mb-2">MENU</Text>
-        <TouchableOpacity onPress={() => router.push("/seeall")}>
+        <TouchableOpacity onPress={() => router.push("/seeall")}> 
           <Text className="text-orange-500 font-medium right-2 mb-2">See all</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-15 mt-4">
         {menuItems.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => router.push("/")}>
-          <View
+          <TouchableOpacity
             key={index}
-            className="bg-white rounded-2xl shadow mr-6 px-4 py-4 w-[190px] mt-1 mb-10 items-center relative left-2"
+            onPress={() => router.push("/(Screen)/productDetail")}
           >
-            <Image
-              source={{ uri: item.image }}
-              className="w-14 h-14 mx-auto mb-2"
-              resizeMode="contain"
-            />
-            <Text className="font-bold text-center text-sm mb-1">{item.name}</Text>
-            <Text className="text-orange-500 text-center font-bold">{item.price}</Text>
-          </View>
+            <View
+              className="bg-white rounded-2xl shadow mr-6 px-4 py-4 w-[190px] mt-1 mb-10 items-center relative left-2"
+            >
+              <Image
+                source={{ uri: item.image }}
+                className="w-14 h-14 mx-auto mb-2"
+                resizeMode="contain"
+              />
+              <Text className="font-bold text-center text-sm mb-1">{item.name}</Text>
+              <Text className="text-orange-500 text-center font-bold">{item.price}</Text>
+            </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
