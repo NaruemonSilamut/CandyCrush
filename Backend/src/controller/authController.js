@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import prisma from "../prismaclient.js";
 import dotenv from "dotenv";
 dotenv.config();
+
 const authSchema = z.object({
   userFirstname: z.string().min(1, { message: "Firstname is required" }),
   userLastname: z.string().min(1, { message: "Lastname is required" }),

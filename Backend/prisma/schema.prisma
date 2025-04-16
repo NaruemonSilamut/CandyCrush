@@ -26,21 +26,10 @@ model User {
   updatedAt        DateTime @updatedAt
 }
 
-model Drinks {
-  drinkId          String  @id @default(cuid())
-  drinkName        String
-  drinkSize        String
-  drinkSweetness   String
-  drinkPrice       Float
-  drinkDescription String
-  drinkImage       String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-}
-
 model IceCream {
   iceCreamId       String  @id @default(cuid())
   iceCreamName     String
+  iceCreamFlavor   String
   iceCreamPrice    Float
   iceCreamDescription String
   iceCreamImage    String?
@@ -58,23 +47,11 @@ model Toppings {
   updatedAt        DateTime @updatedAt
 }
 
-model Desserts {
-  dessertId        String  @id @default(cuid())
-  dessertName      String
-  dessertPrice     Float
-  dessertDescription String
-  dessertImage     String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-}
-
 model Orders {
   orderId          String  @id @default(cuid())
   userId           String
-  drinkId          String
   iceCreamId       String
   toppingId        String
-  dessertId        String
   orderStatus      String  @default("pending")
   orderTotal       Float
   createdAt        DateTime @default(now())
@@ -83,26 +60,10 @@ model Orders {
 model OrderItems {
   orderItemId      String  @id @default(cuid())
   orderId          String
-  drinkId          String
   iceCreamId       String
   toppingId        String
-  dessertId        String
   itemQuantity     Int
   itemPrice        Float
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-}
-
-
-model Reviews {
-  reviewId         String  @id @default(cuid())
-  userId           String
-  drinkId          String
-  iceCreamId       String
-  toppingId        String
-  dessertId        String
-  reviewRating     Int
-  reviewComment    String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
@@ -110,10 +71,8 @@ model Reviews {
 model Cart {
   cartId           String  @id @default(cuid())
   userId           String
-  drinkId          String
   iceCreamId       String
   toppingId        String
-  dessertId        String
   itemQuantity     Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -125,6 +84,16 @@ model Payment {
   paymentMethod    String
   paymentStatus    String
   paymentAmount    Float
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model rating {
+  ratingId         String  @id @default(cuid())
+  userId           String
+  iceCreamId       String
+  orderId          String
+  ratingValue      Int
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
