@@ -22,7 +22,7 @@ const Register = () => {
                keyboardType="default"
              />
            </View>
-           
+
            <View className="flex-row items-center border border-gray-300 rounded-lg px-3 mb-4">
            <MaterialIcons name="email" size={20} color="black" />
              <TextInput
