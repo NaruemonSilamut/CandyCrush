@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 const Register = () => {
   const router = useRouter();
     const handleLogin = () => {
-      router.push("/(Screen)/Login");
+      router.push("/(Screen)/login");
     };
 
   return (
