@@ -32,10 +32,7 @@ const Login = () => {
             secureTextEntry={true}
           />
         </View>
-
-        {/* <Text className="text-right text-sm text-gray-600 mb-6">
-          Forget Password?
-        </Text> */}
+        
         <TouchableOpacity className="bg-purple-400 py-3 rounded-2xl w-full mx-auto mb-2 mt-4">
           <Text className="text-white text-center font-bold text-lg">
             Login

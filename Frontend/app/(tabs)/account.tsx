@@ -6,11 +6,16 @@ import { useRouter } from 'expo-router';
 const ProfileScreen = () => {
    const router = useRouter();
    const handledLogin = () => {
-          router.push("/(Screen)/login");
+          router.push("/LoadingScreen");
     }
     const handlebBack = () => {
       //@ts-ignore
       router.push("/(tabs)/home");
+    };
+
+    const handlebEdit = () => {
+      //@ts-ignore
+      router.push("/(Screen)/editData");
     };
   return (
     <View className="flex-1 bg-white pt-12 px-6">
@@ -33,7 +38,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <TouchableOpacity className='mr-2'>
+        <TouchableOpacity onPress={handlebEdit} className='mr-2'>
           <Feather name="edit-2" size={18} color="#5b21b6" />
         </TouchableOpacity>
       </View>
