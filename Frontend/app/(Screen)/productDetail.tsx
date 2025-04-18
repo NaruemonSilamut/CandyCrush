@@ -2,6 +2,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import images from "../constant/images";
 
 const ProductDetailScreen = () => {
   const router = useRouter();

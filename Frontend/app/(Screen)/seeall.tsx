@@ -1,54 +1,55 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import images from "../constant/images";
 
 const items = [
   {
     name: "Mocha Lava Crunch",
     price: "120",
-    image: require("../../assets/images/8.png.png"),
+    souce:images.mocha,
     screen: "/productDetail7" // หน้าเชื่อมต่อ
   },
   {
     name: "Choco Swirl Dream",
     price: "130",
-    image: require("../../assets/images/3.png.png"),
+    souce:images.choco,
     screen: "/productDetail4" // หน้าเชื่อมต่อ
   },
   {
     name: "Black Berry ",
     price: "140",
-    image: require("../../assets/images/7.png"),
+    souce:images.black,
     screen: "/productDetail8" // หน้าเชื่อมต่อ
   },
   {
     name: "Sakura Swirl",
     price: "130",
-    image: require("../../assets/images/5.png.png"),
+    souce: images.sakura,
     screen: "/productDetail9" // หน้าเชื่อมต่อ
   },
   {
     name: "Rainbow Surprise",
     price: "150",
-    image: require("../../assets/images/2.png.png"),
+    souce: images.rainbow,
     screen: "/productDetail3" // หน้าเชื่อมต่อ
   },
   {
     name: "Cotton Snow",
     price: "130",
-    image: require("../../assets/images/4.png.png"),
+    souce : images.cotton,
     screen: "/productDetail10" // หน้าเชื่อมต่อ
   },
   {
     name: "Strawberry Blush",
     price: "120",
-    image: require("../../assets/images/1.png.png"),
+    souce: images.strawberry,
     screen: "/(Screen)/" // หน้าเชื่อมต่อ
   },
   {
     name: "Pick & Mix",
     price: "100",
-    image: require("../../assets/images/6.png.png"),
+    souce: images.mix,
     screen: "/productDetail2" // หน้าเชื่อมต่อ
   },
 ];

@@ -1,16 +1,7 @@
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-  Animated,
-} from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity, Animated, Dimensions , TextInput} from "react-native";
 import { useRouter } from "expo-router";
 import { useRef } from "react";
+import images from "../constant/images";  // Import images from the constant folder
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = 180;
@@ -23,20 +14,20 @@ export default function HomeScreen() {
     {
       name: "Strawberry Blush",
       price: 120,
-      image: require("../../assets/images/1.png.png"),
-      screen: "/productDetail", // หน้าเชื่อมต่อ
+      source: images.strawberry,  // Access image from the images.ts file in constant folder
+      screen: "/productDetail", 
     },
     {
       name: "Rainbow Surprise",
       price: 150,
-      image: require("../../assets/images/2.png.png"),
-      screen: "/productDetail3", // หน้าเชื่อมต่อ
+      source: images.rainbow,  // Access image from the images.ts file in constant folder
+      screen: "/productDetail3",
     },
     {
       name: "Choco Swirl Dream",
       price: 130,
-      image: require("../../assets/images/3.png.png"),
-      screen: "/productDetail4", // หน้าเชื่อมต่อ
+      source: images.choco,  // Access image from the images.ts file in constant folder
+      screen: "/productDetail4",
     },
   ];
 
@@ -44,14 +35,14 @@ export default function HomeScreen() {
     {
       name: "Honey Pistachio Bliss",
       price: 120,
-      image: require("../../assets/images/9.png"),
-      screen: "/productDetail5", // หน้าเชื่อมต่อ
+      source: images.honey,  // Access image from the images.ts file in constant folder
+      screen: "/productDetail5",
     },
     {
       name: "Cookie Monster Delight",
       price: 130,
-      image: require("../../assets/images/10.png"),
-      screen: "/productDetail6", // หน้าเชื่อมต่อ
+      source: images.cookie,  // Access image from the images.ts file in constant folder
+      screen: "/productDetail6",
     },
   ];
 
@@ -122,8 +113,7 @@ export default function HomeScreen() {
           });
 
           return (
-            <TouchableOpacity onPress={() => router.push(item.screen)}>
-              {/* Animated Card */}
+            <TouchableOpacity onPress={() => router.push("/(Screen)/property/")}>
               <Animated.View
                 style={{
                   width: ITEM_WIDTH,
@@ -133,7 +123,7 @@ export default function HomeScreen() {
               >
                 <View className="bg-white rounded-2xl shadow px-4 py-8 w-full mt-6 items-center">
                   <Image
-                    source={item.image}
+                    source={item.source}  // Use the image from images.ts
                     style={{ width: "100%", height: 160 }}
                     resizeMode="contain"
                   />
@@ -154,34 +144,23 @@ export default function HomeScreen() {
           MENU
         </Text>
         <TouchableOpacity onPress={() => router.push("/seeall")}>
-          <Text className="text-cyan-800  font-medium right-2 mb-1">
+          <Text className="text-cyan-800 font-medium right-2 mb-1">
             See all
           </Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        className="mb-15 mt-4"
-      >
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-15 mt-4">
         {menuItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => router.push(item.screen)} // Navigate to respective screen
-          >
+          <TouchableOpacity key={index} onPress={() => router.push(item.screen)}>
             <View className="bg-white rounded-2xl shadow mr-6 px-4 py-4 w-[190px] mt-1 mb-10 items-center relative left-2">
               <Image
-                source={item.image}
+                source={item.source}  // Use the image from images.ts
                 style={{ width: "100%", height: 160 }}
                 resizeMode="contain"
               />
-              <Text className="font-bold text-center text-sm mb-2">
-                {item.name}
-              </Text>
-              <Text className="text-cyan-800 text-center font-medium text-ml">
-                {item.price} ฿
-              </Text>
+              <Text className="font-bold text-center text-sm mb-2">{item.name}</Text>
+              <Text className="text-cyan-800 text-center font-medium text-ml">{item.price} ฿</Text>
             </View>
           </TouchableOpacity>
         ))}
