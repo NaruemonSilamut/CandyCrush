@@ -1,9 +1,10 @@
 import express from "express";
-import { getIceCreamController, createIceCreamController } from "../controller/icecreamController.js";
+import { getIceCreamController, createIceCreamController, deleteIceCreamController } from "../controller/icecreamController.js";
 
 const router = express.Router();
 
-router.get("/", getIceCreamController);
-router.post("/", createIceCreamController);
+router.get("/icecream", getIceCreamController);
+router.post("/icecream", createIceCreamController);
+router.delete("/icecream/:iceCreamId", deleteIceCreamController);
 
 export default router;

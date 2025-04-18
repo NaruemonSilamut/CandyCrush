@@ -24,76 +24,109 @@ model User {
   userRole          String  @default("user") 
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+
+  orders        Order[]
+  carts         Cart[]
+  ratings       Rating[]
 }
 
 model IceCream {
-  iceCreamId       String  @id @default(cuid())
-  iceCreamName     String
-  iceCreamFlavor   String
-  iceCreamPrice    Float
+  iceCreamId          String   @id @default(cuid())
+  iceCreamName        String
+  iceCreamPrice       Float
   iceCreamDescription String
-  iceCreamImage    String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  iceCreamImage       String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  orders              Order[]
+  orderItems          OrderItem[]
+  carts               Cart[]
+  ratings             Rating[]
 }
 
-model Toppings {
-  toppingId        String  @id @default(cuid())
-  toppingName      String
-  toppingPrice     Float
+model Topping {
+  toppingId          String   @id @default(cuid())
+  toppingName        String
+  toppingPrice       Float
   toppingDescription String
-  toppingImage     String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  toppingImage       String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  orders             Order[]
+  orderItems         OrderItem[]
+  carts              Cart[]
 }
 
-model Orders {
-  orderId          String  @id @default(cuid())
-  userId           String
-  iceCreamId       String
-  toppingId        String
-  orderStatus      String  @default("pending")
-  orderTotal       Float
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+model Order {
+  orderId     String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [userId])
+  iceCreamId  String
+  iceCream    IceCream    @relation(fields: [iceCreamId], references: [iceCreamId])
+  toppingId   String
+  topping     Topping     @relation(fields: [toppingId], references: [toppingId])
+  orderTotal  Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  payment     Payment?
+  orderItems  OrderItem[]
+  ratings     Rating[]
 }
-model OrderItems {
-  orderItemId      String  @id @default(cuid())
-  orderId          String
-  iceCreamId       String
-  toppingId        String
-  itemQuantity     Int
-  itemPrice        Float
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+
+model OrderItem {
+  orderItemId String    @id @default(cuid())
+  orderId     String
+  order       Order     @relation(fields: [orderId], references: [orderId])
+  iceCreamId  String
+  iceCream    IceCream  @relation(fields: [iceCreamId], references: [iceCreamId])
+  toppingId   String
+  topping     Topping   @relation(fields: [toppingId], references: [toppingId])
+  itemQuantity Int
+  itemPrice   Float
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Cart {
-  cartId           String  @id @default(cuid())
-  userId           String
-  iceCreamId       String
-  toppingId        String
-  itemQuantity     Int
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  cartId       String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [userId])
+  iceCreamId   String
+  iceCream     IceCream @relation(fields: [iceCreamId], references: [iceCreamId])
+  toppingId    String
+  topping      Topping  @relation(fields: [toppingId], references: [toppingId])
+  itemQuantity Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, iceCreamId, toppingId])
 }
 
 model Payment {
-  paymentId        String  @id @default(cuid())
-  orderId          String
-  paymentMethod    String
-  paymentStatus    String
-  paymentAmount    Float
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  paymentId     String        @id @default(cuid())
+  orderId       String        @unique
+  order         Order         @relation(fields: [orderId], references: [orderId])
+  paymentMethod String
+  paymentAmount Float
+  paymentStatus String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
-model rating {
-  ratingId         String  @id @default(cuid())
-  userId           String
-  iceCreamId       String
-  orderId          String
-  ratingValue      Int
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+model Rating {
+  ratingId    String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [userId])
+  iceCreamId  String
+  iceCream    IceCream @relation(fields: [iceCreamId], references: [iceCreamId])
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [orderId])
+  ratingValue Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, orderId])
 }

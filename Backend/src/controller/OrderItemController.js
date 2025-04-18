@@ -1,10 +1,12 @@
 import { z } from "zod";
-import { createOrderItem, getOrderItems } from "../service/serviceOrderItem.js";
+import { createOrderItem, getOrderItems } from "../service/serviceOrderltem.js";
 
 const orderItemSchema = z.object({
-  orderId: z.string(),
-  iceCreamId: z.string(),
-  quantity: z.number().min(1),
+  orderId: z.string().min(1, "Order ID is required"),
+  iceCreamId: z.string().min(1, "Ice Cream ID is required"),
+  toppingId: z.string().optional(),
+  itemQuantity: z.number().min(1, "Item quantity must be at least 1"),
+  itemPrice: z.number().positive("Item price must be a positive number"),
 });
 
 export const getOrderItemsController = async (req, res) => {

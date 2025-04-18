@@ -2,13 +2,10 @@ import { z } from "zod";
 import { createCart, getCart } from "../service/serviceCart.js";
 
 const cartSchema = z.object({
-  userId: z.string().min(1, { message: "User ID is required" }),
-  items: z.array(
-    z.object({
-      iceCreamId: z.string(),
-      quantity: z.number().min(1),
-    })
-  ),
+  userId: z.string(),
+  iceCreamId: z.string(),
+  toppingId: z.string(),
+  itemQuantity: z.number().min(1),
 });
 
 export const getCartController = async (req, res) => {
@@ -27,6 +24,10 @@ export const createCartController = async (req, res) => {
     const data = await createCart(validated);
     res.status(201).json({ message: "Cart created", data });
   } catch (error) {
+    console.log(error);
+    if (error instanceof z.ZodError) {
+      res.status(400).json({ message: "Invalid data", errors: error.errors });
+    }
     res.status(400).json({ errors: error.errors });
   }
 };

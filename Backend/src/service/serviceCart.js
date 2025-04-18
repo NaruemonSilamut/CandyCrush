@@ -1,17 +1,11 @@
+import prisma from "../prismaclient.js";
+
 export const getCart = async () => {
-    return await prisma.cart.findMany({
-      include: { items: true },
-    });
-  };
-  
-  export const createCart = async (data) => {
-    return await prisma.cart.create({
-      data: {
-        userId: data.userId,
-        items: {
-          create: data.items,
-        },
-      },
-    });
-  };
-  
+  return await prisma.cart.findMany();
+}
+
+export const createCart = async (cart) => {
+  return await prisma.cart.create({
+    data: cart
+  });
+};
