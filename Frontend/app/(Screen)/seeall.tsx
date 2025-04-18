@@ -4,44 +4,52 @@ import { Ionicons } from "@expo/vector-icons";
 
 const items = [
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046750.png",
+    name: "Mocha Lava Crunch",
+    price: "120",
+    image: require("../../assets/images/8.png.png"),
+    screen: "/productDetail7" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046758.png",
+    name: "Choco Swirl Dream",
+    price: "130",
+    image: require("../../assets/images/3.png.png"),
+    screen: "/productDetail4" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046759.png",
+    name: "Black Berry ",
+    price: "140",
+    image: require("../../assets/images/7.png"),
+    screen: "/productDetail8" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046760.png",
+    name: "Sakura Swirl",
+    price: "130",
+    image: require("../../assets/images/5.png.png"),
+    screen: "/productDetail9" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046761.png",
+    name: "Rainbow Surprise",
+    price: "150",
+    image: require("../../assets/images/2.png.png"),
+    screen: "/productDetail3" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046762.png",
+    name: "Cotton Snow",
+    price: "130",
+    image: require("../../assets/images/4.png.png"),
+    screen: "/productDetail10" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046763.png",
+    name: "Strawberry Blush",
+    price: "120",
+    image: require("../../assets/images/1.png.png"),
+    screen: "/(Screen)/" // หน้าเชื่อมต่อ
   },
   {
-    name: "Black forest Cake",
-    price: "¥1950",
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046764.png",
+    name: "Pick & Mix",
+    price: "100",
+    image: require("../../assets/images/6.png.png"),
+    screen: "/productDetail2" // หน้าเชื่อมต่อ
   },
 ];
 
@@ -65,20 +73,19 @@ export default function SeeAllScreen() {
           <TouchableOpacity
             key={index}
             className="bg-white rounded-2xl shadow-sm w-[47%] mb-8 p-6 mr-1 items-center"
-            onPress={() =>
-              router.push(index === 7 ? "/productDetail2" : "/productDetail")
-            }
+            onPress={() => router.push(item.screen)} // เชื่อมไปหน้ารายละเอียดของแต่ละเมนู
           >
             <Image
-              source={{ uri: item.image }}
-              className="w-24 h-24 mb-3"
+              source={item.image}
+              style={{ width: "100%", height: 160, borderRadius: 10 }}
+              className="mb-4"
               resizeMode="contain"
             />
-            <Text className="text-center font-semibold text-sm mb-1 text-gray-700 ">
+            <Text className="text-center font-semibold text-ml mb-1 text-gray-700 ">
               {item.name}
             </Text>
-            <Text className="text-orange-500 font-bold text-center mb-1 ">
-              {item.price}
+            <Text className="text-cyan-800 font-bold text-center mb-1 text-lg">
+              {item.price} ฿
             </Text>
           </TouchableOpacity>
         ))}

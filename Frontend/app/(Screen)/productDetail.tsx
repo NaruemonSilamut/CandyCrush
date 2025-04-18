@@ -10,9 +10,17 @@ const ProductDetailScreen = () => {
   const [scoopLimit, setScoopLimit] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  const totalFlavour = flavourCounts.reduce((sum, count) => sum + count, 0);
-  const totalTopping = toppingCounts.reduce((sum, count) => sum + count, 0);
+  // รายชื่อรสชาติไอศกรีม
+  const flavours = [
+    "Matcha", "Strawberry", "Creamy Berry", "Apple Cranberry", "Chocolate", "Pistachio"
+  ];
 
+  // รายชื่อท้อปปิ้ง
+  const toppings = [
+    "Sprinkles", "Cherries", "Strawberry", "Whipped Cream", "Candy Gems", "Almonds"
+  ];
+
+  // ฟังก์ชันการเลือกรสชาติไอศกรีม
   const handleSelectFlavour = (index: number) => {
     const newCounts = Array(6).fill(0);
     if (scoopLimit === 1) {
@@ -29,6 +37,7 @@ const ProductDetailScreen = () => {
     setFlavourCounts(newCounts);
   };
 
+  // ฟังก์ชันการเลือกท้อปปิ้ง
   const handleSelectTopping = (index: number) => {
     const newCounts = [...toppingCounts];
     newCounts[index] = newCounts[index] === 1 ? 0 : 1;
@@ -37,28 +46,34 @@ const ProductDetailScreen = () => {
     }
   };
 
+  // การคำนวณราคา
   const pricePerItem = 120;
-  const scoopPrice = scoopLimit === 1 ? 15 : scoopLimit === 2 ? 30 : 45;
+  const scoopPrice = scoopLimit === 1 ? 15 : scoopLimit === 2 ? 30 : scoopLimit === 3 ? 45 : 0;
   const toppingPrice = toppingCounts.reduce((sum, val) => sum + (val ? 15 : 0), 0);
   const totalPrice = (pricePerItem + scoopPrice + toppingPrice) * quantity;
 
-  const getIconUri = (index: number) => {
-    const icons = [
-      "https://cdn-icons-png.flaticon.com/512/1046/1046750.png",
-      "https://cdn-icons-png.flaticon.com/512/1046/1046758.png",
-      "https://cdn-icons-png.flaticon.com/512/1046/1046759.png",
-      "https://cdn-icons-png.flaticon.com/512/1046/1046760.png",
-      "https://cdn-icons-png.flaticon.com/512/1046/1046761.png",
-      "https://cdn-icons-png.flaticon.com/512/1046/1046762.png",
-    ];
-    return icons[index % icons.length];
+  // การดึง URL ของไอคอน
+  const getIconUri = (index: number, type: string) => {
+    const icons = {
+      flavour: [
+        require("../../assets/images/i1.png"),
+        require("../../assets/images/i2.png"),
+        require("../../assets/images/i3.png"),
+        require("../../assets/images/i4.png"),
+        require("../../assets/images/i5.png"),
+        require("../../assets/images/i6.png"),
+      ],
+      topping: [
+        require("../../assets/images/25.png"),
+        require("../../assets/images/24.png"),
+        require("../../assets/images/21.png"),
+        require("../../assets/images/22.png"),
+        require("../../assets/images/20.png"),
+        require("../../assets/images/23.png"),
+      ],
+    };
+    return icons[type][index % icons[type].length]; // Return image based on type and index
   };
-
-  const scoopIcons = [
-    "https://cdn-icons-png.flaticon.com/512/3239/3239952.png",
-    "https://cdn-icons-png.flaticon.com/512/3239/3239945.png",
-    "https://cdn-icons-png.flaticon.com/512/3239/3239961.png",
-  ];
 
   return (
     <ScrollView className="flex-1 bg-[#f9f9f9] px-4 pt-14">
@@ -69,18 +84,17 @@ const ProductDetailScreen = () => {
 
       {/* Product Image */}
       <Image
-        source={{ uri: getIconUri(0) }}
+        source={require("../../assets/images/1.png.png")}  // ใช้ getIconUri เพื่อดึงรูปภาพจากประเภท flavour
         className="w-full h-64 mb-4"
         resizeMode="contain"
       />
 
-     {/* Product Info */}
-     <View className="flex-row justify-between items-center px-1 mb-2">
-        <Text className="text-xl font-bold text-gray-800">Creamy Latte</Text>
+      {/* Product Info */}
+      <View className="flex-row justify-between items-center px-1 mb-2">
+        <Text className="text-xl font-bold text-gray-800">Strawberry Blush</Text>
         <Text className="text-lg font-semibold text-gray-600">120</Text>
       </View>
-      <Text className="text-left text-gray-500 mb-4 px-1">Ice americano + fresh milk</Text>
-
+      <Text className="text-left text-gray-500 mb-4 px-1">Pretty in pink! This sweet strawberry scoop brings soft fruity notes and cuteness overload.</Text>
 
       {/* Add Scoop Section */}
       <View className="bg-white p-4 rounded-xl shadow-sm mb-4">
@@ -89,7 +103,7 @@ const ProductDetailScreen = () => {
           className="flex-row items-center justify-between mb-3"
         >
           <View className="flex-row items-center">
-            <View className={`w-5 h-5 border-2 rounded mr-2 ${scoopLimit === 1 ? "bg-gray-800" : "border-gray-400"}`} />
+            <View className={`w-5 h-5 border-2 rounded mr-2 ${scoopLimit === 1 ? "bg-purple-400" : "border-gray-400"}`} />
             <Text>Add 1 scoop</Text>
           </View>
           <Text>15</Text>
@@ -99,7 +113,7 @@ const ProductDetailScreen = () => {
           className="flex-row items-center justify-between"
         >
           <View className="flex-row items-center">
-            <View className={`w-5 h-5 border-2 rounded mr-2 ${scoopLimit === 2 ? "bg-gray-800" : "border-gray-400"}`} />
+            <View className={`w-5 h-5 border-2 rounded mr-2 ${scoopLimit === 2 ? "bg-purple-400" : "border-gray-400"}`} />
             <Text>Add 2 scoop</Text>
           </View>
           <Text>30</Text>
@@ -117,57 +131,53 @@ const ProductDetailScreen = () => {
               className={`w-[30%] ${count ? "bg-purple-100" : "bg-gray-100"} rounded-xl p-2 mb-3 items-center justify-center`}
             >
               <Image
-                source={{ uri: getIconUri(index) }}
+                source={getIconUri(index, "flavour")}
                 className="w-16 h-16 mb-2"
                 resizeMode="contain"
               />
-              <Text className="text-center text-sm">Strawberry</Text>
+              <Text className="text-center text-sm">{flavours[index]}</Text>  {/* แสดงชื่อรสไอศกรีม */}
             </TouchableOpacity>
           ))}
         </View>
       </View>
 
-      
-     {/* Topping Section */}
-     <View className="bg-white p-4 rounded-xl shadow-sm mb-4">
+      {/* Topping Section */}
+      <View className="bg-white p-4 rounded-xl shadow-sm mb-4">
         <View className="flex-row justify-between items-center mb-3">
           <Text className="text-lg font-semibold text-gray-800">Topping</Text>
-          <Text className="text-sm text-gray-400 ml-2 center">เลือกได้สูงสุด 2 อย่าง</Text>
+          <Text className="text-sm text-gray-400 ml-2 px-12 items-center">เลือกได้สูงสุด 2 อย่าง</Text>
         </View>
         <View className="flex-row flex-wrap justify-between">
           {toppingCounts.map((count, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => handleSelectTopping(index)}
-              className={`w-[30%] ${
-                count ? "bg-purple-100" : "bg-gray-100"
-              } rounded-xl p-2 mb-3 items-center justify-center`}
+              className={`w-[30%] ${count ? "bg-purple-100" : "bg-gray-100"} rounded-xl p-2 mb-3 items-center justify-center`}
             >
               <Image
-                source={{ uri: getIconUri(index + 3) }}
-                className="w-14 h-14 mb-2"
+                source={getIconUri(index, "topping")}
+                className="w-18 h-18 mb-2"
                 resizeMode="contain"
               />
-              <Text className="text-center text-sm">Cherries</Text>
-              <Text className="text-sm text-gray-400 ">15฿</Text>
+              <Text className="text-center text-sm">{toppings[index]}</Text> {/* แสดงชื่อท้อปปิ้ง */}
+              <Text className="text-sm text-gray-400 mt-1">15฿</Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
 
-
       {/* Quantity Control */}
       <View className="flex-row justify-center items-center mb-6">
         <TouchableOpacity
           className="bg-gray-300 w-8 h-8 items-center justify-center rounded-full mr-4"
-          onPress={() => setQuantity(prev => Math.max(1, prev - 1))}
+          onPress={() => setQuantity((prev) => Math.max(1, prev - 1))}
         >
           <Text className="text-lg font-bold">-</Text>
         </TouchableOpacity>
         <Text className="text-xl font-semibold">{quantity}</Text>
         <TouchableOpacity
           className="bg-gray-300 w-8 h-8 items-center justify-center rounded-full ml-4"
-          onPress={() => setQuantity(prev => prev + 1)}
+          onPress={() => setQuantity((prev) => prev + 1)}
         >
           <Text className="text-lg font-bold">+</Text>
         </TouchableOpacity>
@@ -177,11 +187,10 @@ const ProductDetailScreen = () => {
       <View className="flex-row justify-between items-center mx-4 mb-10">
         <View className="flex-row items-center">
           <Text className="text-gray-800 font-semibold text-lg">Total: {totalPrice}</Text>
-          <Text className="text-gray-800 font-semibold text-lg ml-2">x {quantity}</Text>
         </View>
         <TouchableOpacity
           className="bg-purple-400 py-3 px-5 rounded-full"
-          onPress={() => router.push("/cart1")}
+          onPress={() => router.push("/(tabs)/cart1")}
         >
           <Text className="text-white font-semibold">Add to order</Text>
         </TouchableOpacity>
@@ -189,6 +198,5 @@ const ProductDetailScreen = () => {
     </ScrollView>
   );
 };
-
 
 export default ProductDetailScreen;
