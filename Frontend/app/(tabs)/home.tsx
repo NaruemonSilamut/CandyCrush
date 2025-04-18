@@ -1,9 +1,11 @@
-import { View, Text, Image, ScrollView, TouchableOpacity, Animated, Dimensions , TextInput} from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity, Animated, Dimensions, TextInput } from "react-native";
 import { useRouter } from "expo-router";
 import { useRef } from "react";
 import images from "../constant/images";  // Import images from the constant folder
+import ProductCard from "../components/productCard";
 
 const { width } = Dimensions.get("window");
+
 const ITEM_WIDTH = 180;
 
 export default function HomeScreen() {
@@ -11,39 +13,16 @@ export default function HomeScreen() {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const featuredItems = [
-    {
-      name: "Strawberry Blush",
-      price: 120,
-      source: images.strawberry,  // Access image from the images.ts file in constant folder
-      screen: "/productDetail", 
-    },
-    {
-      name: "Rainbow Surprise",
-      price: 150,
-      source: images.rainbow,  // Access image from the images.ts file in constant folder
-      screen: "/productDetail3",
-    },
-    {
-      name: "Choco Swirl Dream",
-      price: 130,
-      source: images.choco,  // Access image from the images.ts file in constant folder
-      screen: "/productDetail4",
-    },
+    { iceCreamId: "1", name: "Mocha Lava Crunch", price: 120, image: images.strawberry, },
+    { iceCreamId: "2", name: "Choco Swirl Dream", price: 150, image: images.choco, },
+    { iceCreamId: "3", name: "Black Berry", price: 130, image: images.BlackBerry, },
   ];
-
+  const goToProductDetails = (id: string) => {
+    router.push(`/(Screen)/property/${id}`)
+  }
   const menuItems = [
-    {
-      name: "Honey Pistachio Bliss",
-      price: 120,
-      source: images.honey,  // Access image from the images.ts file in constant folder
-      screen: "/productDetail5",
-    },
-    {
-      name: "Cookie Monster Delight",
-      price: 130,
-      source: images.cookie,  // Access image from the images.ts file in constant folder
-      screen: "/productDetail6",
-    },
+    { iceCreamId: "4", name: "Sakura Swirl", price: 120, image: images.sakura, },
+    { iceCreamId: "5", name: "Rainbow Surprise", price: 130, image: images.rainbow, },
   ];
 
   return (
@@ -113,7 +92,7 @@ export default function HomeScreen() {
           });
 
           return (
-            <TouchableOpacity onPress={() => router.push("/(Screen)/property/")}>
+            <TouchableOpacity onPress={() => goToProductDetails(item.iceCreamId)}>
               <Animated.View
                 style={{
                   width: ITEM_WIDTH,
@@ -123,7 +102,7 @@ export default function HomeScreen() {
               >
                 <View className="bg-white rounded-2xl shadow px-4 py-8 w-full mt-6 items-center">
                   <Image
-                    source={item.source}  // Use the image from images.ts
+                    source={item.image}  // Use the image from images.ts
                     style={{ width: "100%", height: 160 }}
                     resizeMode="contain"
                   />
@@ -143,7 +122,7 @@ export default function HomeScreen() {
         <Text className="text-gray-800 font-semibold text-lg left-2 mb-1">
           MENU
         </Text>
-        <TouchableOpacity onPress={() => router.push("/seeall")}>
+        <TouchableOpacity onPress={() => router.push("/(Screen)/seeall")}>
           <Text className="text-cyan-800 font-medium right-2 mb-1">
             See all
           </Text>
@@ -152,17 +131,8 @@ export default function HomeScreen() {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-15 mt-4">
         {menuItems.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => router.push(item.screen)}>
-            <View className="bg-white rounded-2xl shadow mr-6 px-4 py-4 w-[190px] mt-1 mb-10 items-center relative left-2">
-              <Image
-                source={item.source}  // Use the image from images.ts
-                style={{ width: "100%", height: 160 }}
-                resizeMode="contain"
-              />
-              <Text className="font-bold text-center text-sm mb-2">{item.name}</Text>
-              <Text className="text-cyan-800 text-center font-medium text-ml">{item.price} ฿</Text>
-            </View>
-          </TouchableOpacity>
+          <ProductCard id={item.iceCreamId} name={item.name} price={item.price} image={item.image} onPress={() => goToProductDetails(item.iceCreamId)} />
+
         ))}
       </ScrollView>
     </ScrollView>

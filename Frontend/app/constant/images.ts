@@ -1,40 +1,40 @@
-import home from '../assets/images/home.png';
-import Rebecca from '../assets/images/Rebecca.jpg';
+import home from '@/assets/images/home.png';
+import Rebecca from '@/assets/images/Rebecca.jpg';
 
-import black from '../assets/images/black.png';
-import choco from '../assets/images/choco.png';
-import cookie from '../assets/images/cookie.png';
-import cotton from '../assets/images/cotton.png';
-import honey from '../assets/images/honey.png';
-import sakura from '../assets/images/sakura.png';
-import strawberry from '../assets/images/strawberry.png';
-import rainbow from '../assets/images/rainbow.png';
-import mocha from '../assets/images/mocha.png';
-import mix from '../assets/images/mix.png';
+import BlackBerry from '@/assets/images/BlackBerry.png';
+import choco from '@/assets/images/choco.png';
+import cookie from '@/assets/images/cookie.png';
+import cotton from '@/assets/images/cotton.png';
+import honey from '@/assets/images/honey.png';
+import sakura from '@/assets/images/sakura.png';
+import strawberry from '@/assets/images/strawberry.png';
+import rainbow from '@/assets/images/rainbow.png';
+import mocha from '@/assets/images/mocha.png';
+import mix from '@/assets/images/mix.png';
 
-import scoopo from '../assets/images/scoopo.png';
-import scoopt from '../assets/images/scoopt.png';
-import scoopth from '../assets/images/scoopth.png';
-import scoopf from '../assets/images/scoopf.png';
-import scoopfive from '../assets/images/scoopfive.png';
-import scoops from '../assets/images/scoops.png';
+import appleScoop from '@/assets/images/appleScoop.png';
+import berryScoop from '@/assets/images/berryScoop.png';
+import chocolateScoop from '@/assets/images/chocolateScoop.png';
+import matchaScoop from '@/assets/images/matchaScoop.png';
+import strawberryScoop from '@/assets/images/strawberryScoop.png';
+import pitacchioScoop from '@/assets/images/pitacchioScoop.png';
 
-import toppinga  from '../assets/images/toppinga.png';
-import toppingc from '../assets/images/toppingc.png';
-import toppingmm from '../assets/images/toppingmm.png';
-import toppinggr from '../assets/images/toppinggr.png';
-import toppings from '../assets/images/toppings.png';
-import toppingwc from '../assets/images/toppingwc.png';
+import almondTopping from '@/assets/images/almondTopping.png';
+import candyTopping from '@/assets/images/candyTopping.png';
+import creamTopping from '@/assets/images/creamTopping.png';
+import strawberryTopping from '@/assets/images/strawberryTopping.png';
+import rainbowTopping from '@/assets/images/rainbowTopping.png';
+import cherryTopping from '@/assets/images/cherryTopping.png';
 
-import icescoopone from '../assets/images/icescoopone.png';
-import icescooptwo from '../assets/images/icescooptwo.png';
-import icescoopthree from '../assets/images/icescoopthree.png';
+import icescoopone from '@/assets/images/icescoopone.png';
+import icescooptwo from '@/assets/images/icescooptwo.png';
+import icescoopthree from '@/assets/images/icescoopthree.png';
 
 export default {
-    home, 
+    home,
     Rebecca,
 
-    black,
+    BlackBerry,
     choco,
     cookie,
     cotton,
@@ -45,23 +45,23 @@ export default {
     mocha,
     mix,
 
-    scoopo,
-    scoopt,
-    scoopth,
-    scoopf,
-    scoopfive,
-    scoops,
+    appleScoop,
+    matchaScoop,
+    chocolateScoop,
+    pitacchioScoop,
+    berryScoop,
+    strawberryScoop,
 
-    toppinga,
-    toppingc,
-    toppingmm,
-    toppinggr,
-    toppings,
-    toppingwc,
+    almondTopping,
+    candyTopping,
+    creamTopping,
+    strawberryTopping,
+    rainbowTopping,
+    cherryTopping,
 
     icescoopone,
     icescooptwo,
     icescoopthree,
-    };
+};
 
 

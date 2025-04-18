@@ -19,6 +19,7 @@ export const getIceCreamController = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+//เพิ่มเส้นที่ใข้  list ice cream แค่ 1 ตัว โดยเอารายละเอียดทั้งหมดมา โดยอิงจาก ID ของ ice cream นั้นๆ
 
 export const createIceCreamController = async (req, res) => {
   try {

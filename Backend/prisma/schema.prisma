@@ -25,7 +25,7 @@ model User {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
-
+//ice cream ต้องมีความสัมพันธ์กับตัว topping เพราะ 1 ice cream มีได้หลาย topping
 model IceCream {
   iceCreamId       String  @id @default(cuid())
   iceCreamName     String
