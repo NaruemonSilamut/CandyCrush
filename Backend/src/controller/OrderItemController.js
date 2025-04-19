@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createOrderItem, getOrderItems } from "../service/serviceOrderltem.js";
+import { createOrderItem, getOrderItems, deleteOrderItem } from "../service/serviceOrderltem.js";
 
 const orderItemSchema = z.object({
   orderId: z.string().min(1, "Order ID is required"),
@@ -25,5 +25,21 @@ export const createOrderItemController = async (req, res) => {
     res.status(201).json({ message: "Order item created", data });
   } catch (err) {
     res.status(400).json({ errors: err.errors });
+  }
+};
+
+export const deleteOrderItemController = async (req, res) => {
+  try {
+    const { orderItemId } = req.params;
+    const deleted = await deleteOrderItem(orderItemId);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Order item not found or already deleted" });
+    }
+
+    res.status(200).json({ message: "Order item deleted", data: deleted });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

@@ -8,3 +8,11 @@ export const createPayment = async (payments) => {
         data: payments
     })
 }
+
+export const deletePayment = async (paymentId) => {
+    return await prisma.payment.delete({
+      where: {
+        paymentId: paymentId,
+      },
+    });
+  };

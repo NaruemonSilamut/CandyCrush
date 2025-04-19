@@ -9,4 +9,14 @@ export const getOrderItems = async () => {
       data:orderItem
     });
   };
+
+  export const deleteOrderItem = async (orderItemId) => {
+    try {
+      return await prisma.orderItem.delete({
+        where: { orderItemId }
+      });
+    } catch (error) {
+      return null; // ถ้าลบไม่สำเร็จ เช่น ไม่เจอ ID
+    }
+  };
   

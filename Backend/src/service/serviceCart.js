@@ -9,3 +9,9 @@ export const createCart = async (cart) => {
     data: cart
   });
 };
+
+export const deleteCart = async (cartId) => {
+  return await prisma.cart.delete({
+    where: { cartId },
+  });
+};

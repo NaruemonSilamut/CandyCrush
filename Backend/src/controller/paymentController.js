@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createPayment, getPayment } from "../service/servicePayment.js";
+import { createPayment, getPayment, deletePayment } from "../service/servicePayment.js";
 
 const paymentSchema = z.object({
   orderId: z.string(), 
@@ -41,3 +41,20 @@ export const createPaymentController = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+export const deletePaymentController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await deletePayment(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Payment not found or already deleted" });
+    }
+
+    return res.status(200).json({ message: "Payment deleted successfully", data: deleted });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};

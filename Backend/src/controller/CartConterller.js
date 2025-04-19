@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createCart, getCart } from "../service/serviceCart.js";
+import { createCart, getCart, deleteCart } from "../service/serviceCart.js";
 
 const cartSchema = z.object({
   userId: z.string(),
@@ -29,5 +29,19 @@ export const createCartController = async (req, res) => {
       res.status(400).json({ message: "Invalid data", errors: error.errors });
     }
     res.status(400).json({ errors: error.errors });
+  }
+};
+
+export const deleteCartController = async (req, res) => {
+  try {
+    const { cartId } = req.params;
+    const deleted = await deleteCart(cartId);
+    if (!deleted) {
+      return res.status(404).json({ message: "Cart not found or already deleted" });
+    }
+    res.status(200).json({ message: "Cart deleted", data: deleted });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
