@@ -1,42 +1,60 @@
 import { z } from "zod";
-import { createPayment, getPayment } from "../service/servicePayment.js";
+import { createPayment, getPayment, deletePayment } from "../service/servicePayment.js";
 
 const paymentSchema = z.object({
-    orderId: z.string().min(1, { message: "Order ID is required" }),
-    paymentMethod: z.string(["credit_card", "paypal", "bank_transfer"], { message: "Invalid payment method" }),
-    paymentStatus: z.string(["pending", "completed", "failed"], { message: "Invalid payment status" }),
-    paymentAmount: z.number().positive({ message: "Payment amount must be positive" }),
+  orderId: z.string(), 
+  paymentMethod: z.enum(["credit_card", "paypal", "bank_transfer"]),
+  paymentStatus: z.enum(["pending", "completed", "failed"]),
+  paymentAmount: z.number().positive({ message: "Payment amount must be positive" })
 });
 
 export const getPaymentController = async (req, res) => {
-    try{
-        const data = await getPayment();
-        if (!data) {
-            return res.status(404).json({ message: "No payment found" });
-        }
-        res.status(200).json({ message: "Payment fetched successfully", data });
-    } catch (error) {
-        if (error instanceof z.ZodError) {
-            res.status(400).json({ errors: error.errors });
-        }
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error" });
+  try {
+    const data = await getPayment();
+    if (!data) {
+      return res.status(404).json({ message: "No payment found" });
     }
+    return res.status(200).json({ message: "Payment fetched successfully", data });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 }
 
 export const createPaymentController = async (req, res) => {
-    try {
-        const validatedData = paymentSchema.parse(req.body);
-        const data = await createPayment(validatedData);
-        if (!data) {
-            return res.status(404).json({ message: "Failed to create payment" });
-        }
-        res.status(201).json({ message: "Payment created successfully", data });
-    } catch (error) {
-        if (error instanceof z.ZodError) {
-            res.status(400).json({ errors: error.errors });
-        }
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error" });
+  try {
+    console.log("Request body:", req.body);  // ตรวจสอบข้อมูลที่ได้รับ
+    const validatedData = paymentSchema.parse(req.body);
+    const data = await createPayment(validatedData);
+    if (!data) {
+      return res.status(404).json({ message: "Failed to create payment" });
     }
+    return res.status(201).json({ message: "Payment created successfully", data });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ errors: error.errors });
+    }
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 }
+
+export const deletePaymentController = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleted = await deletePayment(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Payment not found or already deleted" });
+    }
+
+    return res.status(200).json({ message: "Payment deleted successfully", data: deleted });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};

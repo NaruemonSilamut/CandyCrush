@@ -15,7 +15,6 @@ export const getRatingController = async (req, res) => {
             return res.status(404).json({ message: "No rating found" });
         }
         res.status(200).json({message: "Rating fetched successfully", data });
-        
     } catch (error) {
        if (error instanceof z.ZodError) {
             res.status(400).json({ errors: error.errors });
