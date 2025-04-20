@@ -16,7 +16,7 @@ const SucceedScreen = () => {
     <View className="bg-white flex-1 justify-center items-center left-0 right-0 px-6 ">
       <Image source={require('../../assets/images/suc.png')}
       resizeMode="cover"
-      className="w-48 h-44 mb-12 right-2"
+      className="w-48 h-44 mb-12 right-3"
       
       />
       <Text className="text-2xl font-bold mb-4 mt-1">Yeayy!!</Text>

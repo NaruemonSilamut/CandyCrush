@@ -63,10 +63,10 @@ export default function CheckoutScreen() {
 
         {/* ปุ่ม Place Order */}
         <TouchableOpacity
-          className="bg-purple-300 py-3 px-6 rounded-full w-[160px] self-center mt-12"
+          className="bg-purple-300 py-4 px-4 rounded-full w-[150px] self-center mt-12"
           onPress={() => router.push("/(Screen)/LoadingScreen")}
         >
-          <Text className="text-white text-center text-base font-bold">Place Order</Text>
+          <Text className="text-white text-center text-lg font-bold">Place Order</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

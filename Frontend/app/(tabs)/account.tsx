@@ -24,7 +24,7 @@ const ProfileScreen = () => {
         <TouchableOpacity onPress={handleBack}>
           <AntDesign name="left" size={20} color="black" />
         </TouchableOpacity>
-        <Text className="font-bold text-xl ml-2">Profile</Text>
+        <Text className="font-bold text-xl ml-2 ">Profile</Text>
       </View>
 
       <View className="flex-row items-center justify-between mb-6">
@@ -48,17 +48,13 @@ const ProfileScreen = () => {
 
       <View className="mt-auto mb-6 items-center space-y-3">
         <TouchableOpacity
-          onPress={handleLogout}
-          className="bg-purple-300 px-10 py-4 rounded-2xl w-full"
+          onPress={() => router.push("/(tabs)/home")}
+          className="bg-purple-300 py-4 px-4 rounded-full w-[140px] self-center mb-6 "
         >
-          <Text className="text-white font-semibold text-center">Logout</Text>
+          <Text className="text-white text-center text-lg font-bold">Logout</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleBack}>
-          <Text className="text-black text-center font-bold text-base mt-2">
-            Back to home
-          </Text>
-        </TouchableOpacity>
+
       </View>
     </View>
   );
