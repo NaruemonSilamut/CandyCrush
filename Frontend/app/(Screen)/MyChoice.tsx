@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import images from "../constant/images";
+import axios from "axios";
 
 const MyChoice = () => {
   const router = useRouter();
@@ -12,6 +13,22 @@ const MyChoice = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedFlavours, setSelectedFlavours] = useState<string[]>([]);
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+       const res = await axios.get("https://cold-carrots-exist.loca.lt/api/icecream"); // เปลี่ยน URL ตามที่ต้องการ
+        const data = res.data;
+        console.log("Fetched data:", data);
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // รายการรสชาติ
   const flavourCounts = [
