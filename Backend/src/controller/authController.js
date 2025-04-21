@@ -13,7 +13,7 @@ const authSchema = z.object({
   userPassword: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
-  userPhone: z.string().min(1, { message: "Phone number is required" }),
+  userPhone: z.string().min(1, { message: "Phone number is required" }).optional(),
   userImage: z.string().optional(),
   userRole: z.enum(["user", "admin"]).optional(),
 });
@@ -80,6 +80,7 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
+      user,
       token,
     });
   } catch (error) {
