@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createToppingsController, getToppingsController, deleteToppingsController } from "../controller/toppingsController.js";
+import { createToppingsController, getToppingsController, deleteToppingsController } from "../controller/ToppingsController.js";
 
 const router = express.Router();
 router.get("/topping", getToppingsController);

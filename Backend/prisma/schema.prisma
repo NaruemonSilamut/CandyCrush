@@ -43,18 +43,15 @@ model IceCream {
   orderItems          OrderItem[]
   carts               Cart[]
   ratings             Rating[]
-  
   topping            Topping[]
 }
 
 model Topping {
   toppingId          String   @id @default(cuid())
   toppingName        String
-  toppingPrice       Float
-  toppingDescription String
+
   toppingImage       String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+
 
   orders             Order[]
   orderItems         OrderItem[]
@@ -62,6 +59,14 @@ model Topping {
 
   iceCream           IceCream @relation(fields: [iceCreamId], references: [iceCreamId])
   iceCreamId         String
+}
+
+model flavor {
+  flavorId          String   @id @default(cuid())
+  flavorName        String 
+  flavorImage       String?
+
+
 }
 
 model Order {

@@ -1,5 +1,5 @@
 import express from "express";
-import { getIceCreamController, createIceCreamController, deleteIceCreamController } from "../controller/icecreamController.js";
+import { getIceCreamController, createIceCreamController, deleteIceCreamController } from "../controller/IcecreamController.js";
 
 const router = express.Router();
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { createRatingController, getRatingController } from "../controller/ratingController.js";
+import { createRatingController, getRatingController } from "../controller/RatingController.js";
 
 const router = express.Router();
 router.get("/rating", getRatingController)
