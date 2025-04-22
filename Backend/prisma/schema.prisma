@@ -44,6 +44,7 @@ model IceCream {
   carts               Cart[]
   ratings             Rating[]
   topping            Topping[]
+  flavors            flavor[]
 }
 
 model Topping {
@@ -63,10 +64,11 @@ model Topping {
 
 model flavor {
   flavorId          String   @id @default(cuid())
-  flavorName        String 
+  flavorName        String
   flavorImage       String?
 
-
+  iceCream          IceCream @relation(fields: [iceCreamId], references: [iceCreamId])
+  iceCreamId        String
 }
 
 model Order {
