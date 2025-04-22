@@ -45,6 +45,7 @@ model IceCream {
   ratings             Rating[]
   
   topping            Topping[]
+  flavors            flavor[]
 }
 
 model Topping {
@@ -62,6 +63,15 @@ model Topping {
 
   iceCream           IceCream @relation(fields: [iceCreamId], references: [iceCreamId])
   iceCreamId         String
+}
+
+model flavor {
+  flavorId          String   @id @default(cuid())
+  flavorName        String
+  flavorImage       String?
+
+  iceCream          IceCream @relation(fields: [iceCreamId], references: [iceCreamId])
+  iceCreamId        String
 }
 
 model Order {
