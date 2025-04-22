@@ -6,18 +6,18 @@ import Constants from "expo-constants";
 const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 interface User {
-    userId: String;
-    userFirstname:String; 
-    userLastname:String;
-    userEmail      :   String ;
-    userPassword   :   String;
-    userPhone      :   String ;
-    userImage      :   String;
+  userId: string;
+  userFirstname: string;
+  userLastname: string;
+  userEmail: string;
+  userPassword: string;
+  userPhone: string;
+  userImage: string;
 }
 
 interface AuthStore {
   user: User | null;
-  token: String | null;
+  token: string | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -30,19 +30,20 @@ export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   token: null,
   isAuthenticated: false,
+
   clearToken: async () => {
     set({ token: null });
     await AsyncStorage.removeItem("token");
   },
+
   login: async (email: string, password: string) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/login`,
-        { email, password },
-        { withCredentials: true }
-      );
-
-      console.log("Login response:", response.data);
+      const response = await axios.post(`${API_URL}/login`, {
+        userEmail: email,
+        userPassword: password,
+      });
+      console.log("Login response:", response.data); // Log the response data
+      
 
       const { user, token } = response.data;
 
@@ -50,27 +51,32 @@ export const useAuthStore = create<AuthStore>((set) => ({
       await AsyncStorage.setItem("user", JSON.stringify(user));
       await AsyncStorage.setItem("token", token);
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("❌ Login error:", error);
 
       if (axios.isAxiosError(error)) {
         const message =
           error.response?.data?.message || "เข้าสู่ระบบล้มเหลว โปรดลองอีกครั้ง";
         throw new Error(message);
+      } else if (error instanceof Error) {
+        throw new Error(error.message || "เกิดข้อผิดพลาดที่ไม่คาดคิด");
       } else {
-        throw new Error("เกิดข้อผิดพลาดที่ไม่คาดคิด");
+        throw new Error("เกิดข้อผิดพลาดที่ไม่รู้จัก");
       }
     }
   },
+
   logout: async () => {
     try {
       await axios.get(`${API_URL}/logout`);
-      await AsyncStorage.removeItem("user");
-      await AsyncStorage.removeItem("token");
-      set({ user: null, token: null, isAuthenticated: false });
-    } catch (error) {
-      console.error("Logout error:", error);
+    } catch (e) {
+      console.warn("🔔 Logout request failed (fallback)");
     }
+
+    await AsyncStorage.removeItem("user");
+    await AsyncStorage.removeItem("token");
+    set({ user: null, token: null, isAuthenticated: false });
   },
+
   checkAuth: async () => {
     try {
       const storedUser = await AsyncStorage.getItem("user");
@@ -85,19 +91,21 @@ export const useAuthStore = create<AuthStore>((set) => ({
         set({ user: null, token: null, isAuthenticated: false });
       }
     } catch (error) {
-      console.error("Error Checking auth status:", error);
+      console.error("❌ Error checking auth status:", error);
     }
   },
+
   refreshUser: async () => {
     try {
       const storedUser = await AsyncStorage.getItem("user");
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        const response = await axios.get(`${API_URL}/user/${parsedUser.id}`);
+        const response = await axios.get(`${API_URL}/user/${parsedUser.userId}`);
         set({ user: response.data });
+        await AsyncStorage.setItem("user", JSON.stringify(response.data));
       }
     } catch (error) {
-      console.error("Error refreshing user:", error);
+      console.error("❌ Error refreshing user:", error);
     }
   },
 }));
