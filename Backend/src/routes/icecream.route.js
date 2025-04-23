@@ -1,10 +1,18 @@
 import express from "express";
-import { getIceCreamController, createIceCreamController, deleteIceCreamController } from "../controller/IcecreamController.js";
+import {
+  getAllIceCream,
+  getIceCreamById,
+  createIceCream,
+  updateIceCream,
+  deleteIceCream,
+} from "../controller/icecream.controller.js";
 
 const router = express.Router();
 
-router.get("/icecream", getIceCreamController);
-router.post("/icecream", createIceCreamController);
-router.delete("/icecream/:iceCreamId", deleteIceCreamController);
+router.get("/icecream", getAllIceCream);
+router.get("/icecream/:id", getIceCreamById);
+router.put("/icecream/:id", updateIceCream);
+router.post("/icecream", createIceCream);
+router.delete("/icecream/:id", deleteIceCream);
 
 export default router;

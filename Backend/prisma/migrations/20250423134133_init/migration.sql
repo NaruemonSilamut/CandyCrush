@@ -1,37 +1,50 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "User" (
+    "userId" TEXT NOT NULL,
+    "userFirstname" TEXT NOT NULL,
+    "userLastname" TEXT NOT NULL,
+    "userEmail" TEXT NOT NULL,
+    "userPassword" TEXT NOT NULL,
+    "userPhone" TEXT NOT NULL,
+    "userImage" TEXT,
+    "userRole" TEXT NOT NULL DEFAULT 'user',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-  - You are about to drop the `OrderItems` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Orders` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Toppings` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `rating` table. If the table is not empty, all the data it contains will be lost.
-  - A unique constraint covering the columns `[userId,iceCreamId,toppingId]` on the table `Cart` will be added. If there are existing duplicate values, this will fail.
-  - A unique constraint covering the columns `[orderId]` on the table `Payment` will be added. If there are existing duplicate values, this will fail.
+    CONSTRAINT "User_pkey" PRIMARY KEY ("userId")
+);
 
-*/
--- DropTable
-DROP TABLE "OrderItems";
+-- CreateTable
+CREATE TABLE "IceCream" (
+    "iceCreamId" TEXT NOT NULL,
+    "iceCreamName" TEXT NOT NULL,
+    "iceCreamPrice" DOUBLE PRECISION NOT NULL,
+    "iceCreamDescription" TEXT NOT NULL,
+    "iceCreamImage" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
--- DropTable
-DROP TABLE "Orders";
-
--- DropTable
-DROP TABLE "Toppings";
-
--- DropTable
-DROP TABLE "rating";
+    CONSTRAINT "IceCream_pkey" PRIMARY KEY ("iceCreamId")
+);
 
 -- CreateTable
 CREATE TABLE "Topping" (
     "toppingId" TEXT NOT NULL,
     "toppingName" TEXT NOT NULL,
-    "toppingPrice" DOUBLE PRECISION NOT NULL,
-    "toppingDescription" TEXT NOT NULL,
     "toppingImage" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "iceCreamId" TEXT,
 
     CONSTRAINT "Topping_pkey" PRIMARY KEY ("toppingId")
+);
+
+-- CreateTable
+CREATE TABLE "flavor" (
+    "flavorId" TEXT NOT NULL,
+    "flavorName" TEXT NOT NULL,
+    "flavorImage" TEXT,
+    "iceCreamId" TEXT,
+
+    CONSTRAINT "flavor_pkey" PRIMARY KEY ("flavorId")
 );
 
 -- CreateTable
@@ -62,6 +75,32 @@ CREATE TABLE "OrderItem" (
 );
 
 -- CreateTable
+CREATE TABLE "Cart" (
+    "cartId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "iceCreamId" TEXT NOT NULL,
+    "toppingId" TEXT NOT NULL,
+    "itemQuantity" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Cart_pkey" PRIMARY KEY ("cartId")
+);
+
+-- CreateTable
+CREATE TABLE "Payment" (
+    "paymentId" TEXT NOT NULL,
+    "orderId" TEXT NOT NULL,
+    "paymentMethod" TEXT NOT NULL,
+    "paymentAmount" DOUBLE PRECISION NOT NULL,
+    "paymentStatus" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Payment_pkey" PRIMARY KEY ("paymentId")
+);
+
+-- CreateTable
 CREATE TABLE "Rating" (
     "ratingId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -75,13 +114,22 @@ CREATE TABLE "Rating" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Rating_userId_orderId_key" ON "Rating"("userId", "orderId");
+CREATE UNIQUE INDEX "User_userEmail_key" ON "User"("userEmail");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Cart_userId_iceCreamId_toppingId_key" ON "Cart"("userId", "iceCreamId", "toppingId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Payment_orderId_key" ON "Payment"("orderId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Rating_userId_orderId_key" ON "Rating"("userId", "orderId");
+
+-- AddForeignKey
+ALTER TABLE "Topping" ADD CONSTRAINT "Topping_iceCreamId_fkey" FOREIGN KEY ("iceCreamId") REFERENCES "IceCream"("iceCreamId") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "flavor" ADD CONSTRAINT "flavor_iceCreamId_fkey" FOREIGN KEY ("iceCreamId") REFERENCES "IceCream"("iceCreamId") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,10 +1,18 @@
 import express from "express";
-import { getOrderItemsController, createOrderItemController, deleteOrderItemController } from "../controller/OrderItemController.js";
+import {
+  getAllOrderItems,
+  getOrderItemById,
+  createOrderItem,
+  updateOrderItem,
+  deleteOrderItem,
+} from "../controller/orderitem.controller.js";
 
 const router = express.Router();
 
-router.get("/orderitem", getOrderItemsController);
-router.post("/orderitem", createOrderItemController);
-router.delete("/orderitem/:orderItemId", deleteOrderItemController);
+router.get("/orderitem", getAllOrderItems);
+router.get("/orderitem/:id", getOrderItemById);
+router.post("/orderitem", createOrderItem);
+router.put("/orderitem/:id", updateOrderItem);
+router.delete("/orderitem/:id", deleteOrderItem);
 
 export default router;
